@@ -12,6 +12,9 @@ import (
 
 // HTTPCallback 执行 HTTP POST 回调。
 func HTTPCallback(ctx context.Context, client *httpx.Client, rec store.Record, ua string) (int, error) {
+	if client == nil {
+		return 0, ErrNilClient
+	}
 	url := rec.URL
 	if url == "" {
 		return 0, Wrap(ErrHTTP, "empty url")
