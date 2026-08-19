@@ -11,8 +11,5 @@ type Handler func(ctx context.Context, rec store.Record) error
 
 // InvokeHandler 调用 handler，nil 时返回 ErrNilHandler。
 func InvokeHandler(h Handler, ctx context.Context, rec store.Record) error {
-	if h == nil {
-		return ErrNilHandler
-	}
 	return h(ctx, rec)
 }
