@@ -14,10 +14,10 @@ func (s *Scheduler) Close() error {
 
 	var first error
 	if s.st != nil {
-		if err := s.st.Close(); err != nil && first == nil {
+		if err := s.st.Flush(); err != nil && first == nil {
 			first = err
 		}
-		if err := s.st.Flush(); err != nil && first == nil {
+		if err := s.st.Close(); err != nil && first == nil {
 			first = err
 		}
 	}
