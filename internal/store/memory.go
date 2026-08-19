@@ -176,8 +176,5 @@ func (m *Memory) Close() error {
 		return nil
 	}
 	m.closed = true
-	m.byID = nil
-	m.order = nil
-	m.path = ""
 	return nil
 }
