@@ -129,13 +129,10 @@ func (m *Memory) Update(rec Record) error {
 	cp := CloneRecord(rec)
 	cp.CreatedAt = cur.CreatedAt
 	cp.UpdatedAt = m.clk.Now()
-	prev := *cur
 	*cur = cp
 	m.dirty = true
 	if m.path != "" {
 		if err := m.persistLocked(); err != nil {
-			*cur = prev
-			m.dirty = true
 			return err
 		}
 	}
