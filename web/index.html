@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>go-jobcron 管理</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>任务调度 jobcron</h1>
+    <p class="sub">延迟 / Cron / HTTP 回调任务管理</p>
+  </header>
+  <main>
+    <section class="card">
+      <h2>创建任务</h2>
+      <form id="create-form">
+        <label>名称 <input name="name" required placeholder="notify-user" /></label>
+        <label>类型
+          <select name="kind">
+            <option value="once">一次性</option>
+            <option value="cron">Cron</option>
+            <option value="http_callback">HTTP 回调</option>
+          </select>
+        </label>
+        <label>载荷 JSON <textarea name="payload" rows="3">{"msg":"hello"}</textarea></label>
+        <label>运行时间 (RFC3339) <input name="run_at" placeholder="留空=立即" /></label>
+        <label>Cron 表达式 <input name="cron_expr" placeholder="*/5 * * * *" /></label>
+        <label>回调 URL <input name="url" placeholder="http://127.0.0.1:9999/hook" /></label>
+        <button type="submit">入队</button>
+      </form>
+    </section>
+    <section class="card">
+      <h2>任务列表 <button id="refresh">刷新</button> <button id="run-due">执行到期</button></h2>
+      <div id="stats" class="stats"></div>
+      <table id="jobs">
+        <thead><tr><th>ID</th><th>名称</th><th>类型</th><th>状态</th><th>下次运行</th><th>操作</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </section>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
