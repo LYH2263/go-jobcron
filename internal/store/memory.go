@@ -126,6 +126,8 @@ func (m *Memory) Update(rec Record) error {
 	if !ok {
 		return ErrNotFound
 	}
+	// 持久化失败时回滚内存，保持与磁盘一致（参见 MarkDone 的回滚契约）。
+	prev := CloneRecord(*cur)
 	cp := CloneRecord(rec)
 	cp.CreatedAt = cur.CreatedAt
 	cp.UpdatedAt = m.clk.Now()
@@ -133,6 +135,7 @@ func (m *Memory) Update(rec Record) error {
 	m.dirty = true
 	if m.path != "" {
 		if err := m.persistLocked(); err != nil {
+			*cur = prev
 			return err
 		}
 	}
