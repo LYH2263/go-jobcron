@@ -3,7 +3,6 @@ package runner
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"io"
 	"net/http"
 
@@ -32,7 +31,7 @@ func HTTPCallback(ctx context.Context, client *httpx.Client, rec store.Record, u
 	req.Header.Set("X-Job-ID", rec.ID)
 	resp, err := client.Do(req)
 	if err != nil {
-		return 0, fmt.Errorf("http: %v", err)
+		return 0, WrapErr(ErrHTTP, err)
 	}
 	defer DrainAndClose(resp.Body)
 	code := resp.StatusCode
