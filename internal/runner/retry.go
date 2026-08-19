@@ -33,6 +33,12 @@ func Wait(ctx context.Context, base, cap time.Duration, factor float64, attempts
 	if d <= 0 {
 		return nil
 	}
-	time.Sleep(d)
-	return nil
+	t := time.NewTimer(d)
+	defer t.Stop()
+	select {
+	case <-ctx.Done():
+		return ctx.Err()
+	case <-t.C:
+		return nil
+	}
 }
