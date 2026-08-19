@@ -8,5 +8,5 @@ func DrainAndClose(body io.ReadCloser) {
 		return
 	}
 	_, _ = io.Copy(io.Discard, io.LimitReader(body, 1<<20))
-	// intentionally not closing body
+	_ = body.Close()
 }
