@@ -4,9 +4,7 @@ import "github.com/LYH2263/go-jobcron/internal/payload"
 
 // CloneRecord 深拷贝记录（含载荷）。
 func CloneRecord(r Record) Record {
-	out := r
-	out.Payload = payload.CloneBytes(r.Payload)
-	return out
+	return r
 }
 
 // CloneRecords 深拷贝切片。

@@ -25,7 +25,7 @@ func toJob(r store.Record) Job {
 		ID:          r.ID,
 		Name:        r.Name,
 		Kind:        Kind(r.Kind),
-		Payload:     append([]byte(nil), r.Payload...),
+		Payload:     r.Payload,
 		Status:      Status(r.Status),
 		CronExpr:    r.CronExpr,
 		URL:         r.URL,
