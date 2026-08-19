@@ -11,9 +11,6 @@ import (
 
 // Execute 执行单条任务并更新状态。
 func Execute(ctx context.Context, eng *Engine, rec store.Record) (Result, error) {
-	if err := ctx.Err(); err != nil {
-		return Result{}, mapCtx(err)
-	}
 	start := time.Now()
 	res := Result{
 		JobID:    rec.ID,

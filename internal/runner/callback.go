@@ -19,7 +19,7 @@ func HTTPCallback(ctx context.Context, client *httpx.Client, rec store.Record, u
 	if url == "" {
 		return 0, Wrap(ErrHTTP, "empty url")
 	}
-	req, err := http.NewRequestWithContext(ctx, http.MethodPost, url, bytes.NewReader(rec.Payload))
+	req, err := http.NewRequest(http.MethodPost, url, bytes.NewReader(rec.Payload))
 	if err != nil {
 		return 0, WrapErr(ErrHTTP, err)
 	}
