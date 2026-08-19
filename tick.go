@@ -11,6 +11,9 @@ func (s *Scheduler) Tick() (int, error) {
 func (s *Scheduler) TickAt(t time.Time) (int, error) {
 	s.mu.Lock()
 	defer s.mu.Unlock()
+	if err := s.checkOpenLocked(); err != nil {
+		return 0, err
+	}
 	due := s.q.PopDue(t)
 	return len(due), nil
 }
