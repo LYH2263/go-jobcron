@@ -24,5 +24,6 @@ func (s *Scheduler) Close() error {
 	s.st = nil
 	s.q = nil
 	s.eng = nil
+	s.clk = nil
 	return first
 }
