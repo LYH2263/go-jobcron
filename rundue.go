@@ -26,6 +26,12 @@ func (s *Scheduler) RunDueContext(ctx context.Context, max int) ([]RunResult, er
 	}
 	var out []RunResult
 	for {
+		if err := ctx.Err(); err != nil {
+			if len(out) == 0 {
+				return out, mapCtxErr(err)
+			}
+			return out, mapCtxErr(err)
+		}
 		if max > 0 && len(out) >= max {
 			return out, nil
 		}

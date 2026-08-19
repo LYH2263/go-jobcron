@@ -59,6 +59,9 @@ func NewEngine(cfg Config) *Engine {
 
 // RunOne 执行一条到期任务。
 func (e *Engine) RunOne(ctx context.Context, now time.Time) (Result, bool, error) {
+	if err := ctx.Err(); err != nil {
+		return Result{}, false, mapCtx(err)
+	}
 	if e.st == nil || e.q == nil {
 		return Result{}, false, ErrRun
 	}
