@@ -84,6 +84,8 @@ func MarkDone(eng *Engine, rec store.Record) error {
 		return nil
 	}
 	if err := eng.st.Update(rec); err != nil {
+		rec.Status = prevStatus
+		rec.Attempts = prevAttempts
 		return err
 	}
 	eng.q.Remove(rec.ID)
