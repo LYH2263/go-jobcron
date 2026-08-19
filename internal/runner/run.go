@@ -3,7 +3,6 @@ package runner
 import (
 	"context"
 	"errors"
-	"fmt"
 	"time"
 
 	"github.com/LYH2263/go-jobcron/internal/schedule"
@@ -56,7 +55,7 @@ func Execute(ctx context.Context, eng *Engine, rec store.Record) (Result, error)
 	if dead {
 		res.Err = "dead: " + res.Err
 	}
-	return res, fmt.Errorf("run: %v", runErr)
+	return res, WrapErr(ErrRun, runErr)
 }
 
 // MarkDone 标记完成；persist 失败时回滚内存状态。
