@@ -17,6 +17,10 @@ func Execute(ctx context.Context, eng *Engine, rec store.Record) (Result, error)
 		Name:     rec.Name,
 		Attempts: rec.Attempts + 1,
 	}
+	// ctx 已取消（如 SIGTERM）时不再执行，避免 claim 后仍打回调。
+	if err := ctx.Err(); err != nil {
+		return res, err
+	}
 	rec.Status = "running"
 	rec.Attempts++
 	_ = eng.st.Update(rec)

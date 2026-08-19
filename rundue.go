@@ -26,6 +26,10 @@ func (s *Scheduler) RunDueContext(ctx context.Context, max int) ([]RunResult, er
 	}
 	var out []RunResult
 	for {
+		// ctx 已取消（如 SIGTERM）时立即退出，不再 claim 到期任务。
+		if err := ctx.Err(); err != nil {
+			return out, mapCtxErr(err)
+		}
 		if max > 0 && len(out) >= max {
 			return out, nil
 		}
