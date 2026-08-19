@@ -33,7 +33,7 @@ func HTTPCallback(ctx context.Context, client *httpx.Client, rec store.Record, u
 	if err != nil {
 		return 0, WrapErr(ErrHTTP, err)
 	}
-	DrainAndClose(resp.Body)
+	defer DrainAndClose(resp.Body)
 	code := resp.StatusCode
 	if code < 200 || code >= 300 {
 		body, _ := io.ReadAll(io.LimitReader(resp.Body, 512))
