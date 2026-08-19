@@ -10,7 +10,7 @@ import (
 
 // Enqueue 入队一次性延迟任务。
 func (s *Scheduler) Enqueue(name string, pl []byte, runAt time.Time) (string, error) {
-	return s.enqueueKind(name, payload.CloneBytes(pl), KindOnce, "", "", runAt)
+	return s.enqueueKind(name, pl, KindOnce, "", "", runAt)
 }
 
 // EnqueueCron 入队 cron 周期任务。
