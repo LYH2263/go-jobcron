@@ -78,7 +78,9 @@ func (s *Scheduler) RunDueContext(ctx context.Context, max int) ([]RunResult, er
 			s.mu.Lock()
 			base, cap, factor := s.backoffBase, s.backoffCap, s.backoffFactor
 			s.mu.Unlock()
-			_ = runner.Wait(ctx, base, cap, factor, rr.Attempts)
+			if err := runner.Wait(ctx, base, cap, factor, rr.Attempts); err != nil {
+				return out, mapCtxErr(err)
+			}
 		}
 	}
 }
